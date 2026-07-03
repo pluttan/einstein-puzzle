@@ -1,13 +1,8 @@
-![Header](header.png)
-
 <div align="center">
 
 # einstein_puzzle
 
 **Процедурный генератор головоломок Эйнштейна до 100x100**
-
-[![License](https://img.shields.io/badge/license-MIT-2C2C2C?style=for-the-badge&labelColor=1E1E1E)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.12-2C2C2C?style=for-the-badge&logo=python&labelColor=1E1E1E)]()
 
 </div>
 
@@ -38,6 +33,16 @@
 
 </div>
 
+## ■ Как это работает
+
+```
+1. Пользователь задаёт размер головоломки (N домов, M категорий), сложность и опциональный seed.
+2. Генератор строит граф подсказок — spanning-tree топология для N ≤ 10, звёздная топология для N > 10.
+3. Набор подсказок минимизируется согласно уровню сложности (easy оставляет больше подсказок, hard обрезает до минимума).
+4. Встроенный CSP-солвер распространяет ограничения с bitmask-доменами и делает возврат для подтверждения ровно одного допустимого решения.
+5. Головоломка отображается в виде читаемого текста (на русском) для N ≤ 15 или в формате JSON для бо́льших размеров.
+```
+
 ## ■ Скриншоты
 
 <div align="center">
@@ -48,7 +53,7 @@
 
 </div>
 
-## ■ Запуск
+## ■ Использование
 
 ```bash
 make install      # создать venv (зависимости не нужны)
@@ -64,21 +69,21 @@ python3.12 -m src.main -n 8 -m 5                      # 8 домов, 5 кате
 python3.12 -m src.main -n 5 --format both -o out.txt  # текст + JSON в файл
 ```
 
-## ■ Project Structure
+## ■ Структура проекта
 
 ```
 src/
-├── main.py         — CLI entry point
-├── model.py        — core data structures + bitmask utilities
-├── clues.py        — clue types and constraint index
-├── solver.py       — CSP solver (bitmask domains, propagation, backtracking)
-├── generator.py    — puzzle generation (spanning tree / star topology)
-├── vocabulary.py   — themed word lists and name generation
-├── formatter.py    — text (Russian) and JSON output
-├── test_solver.py  — solver / generator / round-trip tests
+├── main.py         — точка входа CLI
+├── model.py        — основные структуры данных + bitmask-утилиты
+├── clues.py        — типы подсказок и индекс ограничений
+├── solver.py       — CSP-солвер (bitmask-домены, распространение, возврат)
+├── generator.py    — генерация головоломок (spanning tree / звёздная топология)
+├── vocabulary.py   — тематические словари и генерация имён
+├── formatter.py    — текстовый (русский) и JSON вывод
+├── test_solver.py  — тесты солвера / генератора / round-trip
 └── __init__.py
 ```
 
-## ■ License
+## ■ Лицензия
 
 MIT © [pluttan](https://github.com/pluttan)
